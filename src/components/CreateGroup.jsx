@@ -33,30 +33,12 @@ const CreateGroup = () => {
                     { title: values.title, members, owner: loggedUser._id, id: groupEditValues._id } :
                     { title: values.title, members, owner: loggedUser._id }).
                 then((res) => {
-                    toast.success(res.data.message, {
-                        position: "top-right",
-                        autoClose: 2500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    toast.success(res.data.message);
                     dispatch(getLoggedUserData(loggedUser._id));
                     closeModal();
                 }).
                 catch((err) => {
-                    toast.error(err.response.data.message, {
-                        position: "top-right",
-                        autoClose: 2500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    toast.error(err.response.data.message);
                 })
         },
         validationSchema: yup.object().shape({
@@ -97,14 +79,14 @@ const CreateGroup = () => {
                     </div>
                     <div className='flex flex-col gap-4 p-4 bg-primary z-30  absolute top-10  border-2 border-solid rounded-md'>
                         <div className="flex items-center justify-between">
-                            <h1 className='text-lg  font-bold flex gap-2 items-center '><MdGroupAdd /> New Group</h1>
+                            <h1 className='text-lg  font-bold flex gap-2 items-center '><MdGroupAdd /> {groupEditMode ? "Edit" : "New"} Group</h1>
                             <button onClick={closeModal} className=' text-white hover:text-body font-bold w-4 h-4 flex items-center justify-center rounded-full p-1'>
                                 X
                             </button>
                         </div>
                         <div className='bg-elements px-6 py-3 md:px-10 md:py-5 rounded-xl flex flex-col gap-2 justify-center items-center '>
                             <form method='POST' encType="multipart/form-data" onSubmit={formik.handleSubmit} className='flex flex-col gap-4 '>
-                                <input value={formik.values.title} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Title *' name='title' />
+                                <input defaultValue={formik.values.title} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Title *' name='title' />
                                 {formik.errors.title && formik.touched.title && <small className='text-customRed text-xs px-2'>{formik.errors.title}</small>}
                                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5 w-auto md:w-96'>
                                     <div className='col-span-1'>

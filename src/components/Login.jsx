@@ -19,30 +19,12 @@ const Login = () => {
         },
         onSubmit: async (values) => {
             const res = await axios.post("http://localhost:5000/users/login", values).then((res) => {
-                toast.success(res.data.message, {
-                    position: "top-right",
-                    autoClose: 2500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.success(res.data.message);
                 dispatch(setLogged(true));
                 dispatch(setLoggedUser(res.data.user));
-                localStorage.setItem("token",JSON.stringify(res.data.token));
+                localStorage.setItem("token", JSON.stringify(res.data.token));
             }).catch((err) => {
-                toast.error(err.response.data.message, {
-                    position: "top-right",
-                    autoClose: 2500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                toast.error(err.response.data.message)
             })
 
 

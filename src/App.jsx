@@ -12,7 +12,7 @@ function App() {
   const { logged } = useSelector((state) => state.user)
 
   return (
-    <div className="App text-white font-roboto">
+    <div className="App text-white font-roboto min-h-screen">
 
 
       <BrowserRouter>

@@ -37,9 +37,9 @@ const GroupMemberList = () => {
                             <form>
                                 <label className='flex items-center gap-10'>
                                     Selected Group:
-                                    <select onChange={(e) => dispatch(setMemberListValues(JSON.parse(e.target.value)))} className='text-primary px-2 '>
+                                    <select defaultValue={memberListValues.title} onChange={(e) => dispatch(setMemberListValues(JSON.parse(e.target.value)))} className='text-primary px-2 '>
                                         {loggedUser.groups.map((group) => (
-                                            <option selected={group.title === memberListValues.title ? true : false} value={JSON.stringify(group)} key={group._id}>{group.title}</option>
+                                            <option value={JSON.stringify(group)} key={group._id}>{group.title}</option>
                                         ))}
                                     </select>
                                 </label>

@@ -36,7 +36,7 @@ const Navbar = () => {
                 </ul>
                 <button onClick={() => setMobileMenu(!mobileMenu)} className='sm:hidden text-xl'><AiOutlineMenu /></button>
                 {mobileMenu &&
-                    <div className='absolute -bottom-28 border-b border-solid border-white p-4 left-0 bg-primary w-full '>
+                    <div className='sm:hidden absolute -bottom-28 border-b border-solid border-white p-4 left-0 bg-primary w-full '>
                         <ul className="flex flex-col w-full items-center justify-end gap-3 text-xs md:text-sm  ">
                             <li onClick={() => dispatch(setGroupModalVisibility(true))} className=' h-full flex gap-2 bg-orange-400 px-2 py-1 rounded-lg text- items-center cursor-pointer hover:bg-opacity-60'>
                                 <MdGroupAdd /> New Group

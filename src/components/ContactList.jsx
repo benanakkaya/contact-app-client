@@ -9,7 +9,7 @@ const ContactList = ({searchInput, activeTab}) => {
     const dispatch = useDispatch();
     const { loggedUser } = useSelector((state) => state.user);
 
-    console.log(loggedUser);
+
 
     return (
         <>

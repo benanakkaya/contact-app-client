@@ -45,16 +45,7 @@ const NewContact = () => {
                         newImageUrl = res.data.secure_url;
                     })
                 } catch (error) {
-                    toast.error("Please try to create a contact without a photo!", {
-                        position: "top-right",
-                        autoClose: 2500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    toast.error("Please try to create a contact without a photo!");
                 }
             }
 
@@ -69,29 +60,11 @@ const NewContact = () => {
                         owner: loggedUser._id,
                         image: newImageUrl
                     }).then((res) => {
-                        toast.success(res.data.message, {
-                            position: "top-right",
-                            autoClose: 2500,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
+                        toast.success(res.data.message);
                         dispatch(getLoggedUserData(loggedUser._id));
                         closeModal();
                     }).catch((err) => {
-                        toast.success(err.response.data.message, {
-                            position: "top-right",
-                            autoClose: 2500,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
+                        toast.success(err.response.data.message);
                     })
             } else {
                 const res = await axios.post("http://localhost:5000/contacts/editContact",
@@ -175,14 +148,14 @@ const NewContact = () => {
                         <div className='bg-elements p-8 md:p-16 rounded-xl flex flex-col gap-4 justify-center items-center '>
                             {typeof (formik.values.image) !== "string" ? <ImagePreview image={formik.values.image} /> : <img src={formik.values.image} className='w-20 h-20 rounded-full' alt="default" />}
                             <form method='POST' encType="multipart/form-data" onSubmit={formik.handleSubmit} className='flex flex-col gap-4 '>
-                                <input value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Name *' name='name' />
+                                <input defaultValue={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Name *' name='name' />
                                 {formik.errors.name && formik.touched.name && <small className='text-customRed text-xs px-2'>{formik.errors.name}</small>}
-                                <input value={formik.values.surname} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Surname *' name='surname' />
+                                <input defaultValue={formik.values.surname} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Surname *' name='surname' />
                                 {formik.errors.surname && formik.touched.surname && <small className='text-customRed text-xs px-2'>{formik.errors.surname}</small>}
-                                <input value={formik.values.nickname} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Nickname' name='nickname' />
-                                <input value={formik.values.phone} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Phone * (5xxxxxxxxx)' name='phone' />
+                                <input defaultValue={formik.values.nickname} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Nickname' name='nickname' />
+                                <input defaultValue={formik.values.phone} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='Phone * (5xxxxxxxxx)' name='phone' />
                                 {formik.errors.phone && formik.touched.phone && <small className='text-customRed text-xs px-2'>{formik.errors.phone}</small>}
-                                <input value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='E-mail' name='email' />
+                                <input defaultValue={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='text' placeholder='E-mail' name='email' />
                                 <div className='flex items-center gap-2 justify-center w-full'>
                                     <div className='flex-1 flex items-center justify-center'>
                                         <input

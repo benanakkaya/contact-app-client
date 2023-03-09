@@ -15,6 +15,7 @@ export const getLoggedUserData = createAsyncThunk("users/getUser", async (id) =>
 const userSlice = createSlice({
     name: "user",
     initialState: {
+        status: "idle",
         logged: false,
         loggedUser: {},
         modalVisibility: false,
@@ -67,7 +68,11 @@ const userSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
+        builder.addCase(getLoggedUserData.pending, (state, action) => {
+            state.status = "pending";
+        }),
         builder.addCase(getLoggedUserData.fulfilled, (state, action) => {
+            state.status = "succeeded";
             state.loggedUser = action.payload;
         })
     }
