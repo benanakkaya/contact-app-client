@@ -50,7 +50,7 @@ const NewContact = () => {
             }
 
             if (editMode === false) {
-                const res = await axios.post("https://contact-app-backend-tau.vercel.app/contacts/newContact",
+                const res = await axios.post("https://contact-backend-dk27.onrender.com/contacts/newContact",
                     {
                         name: values.name,
                         surname: values.surname,
@@ -67,7 +67,7 @@ const NewContact = () => {
                         toast.success(err.response.data.message);
                     })
             } else {
-                const res = await axios.post("https://contact-app-backend-tau.vercel.app/contacts/editContact",
+                const res = await axios.post("https://contact-backend-dk27.onrender.com/contacts/editContact",
                     {
                         name: values.name,
                         surname: values.surname,

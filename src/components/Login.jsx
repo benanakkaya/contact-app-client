@@ -18,7 +18,7 @@ const Login = () => {
             password: ""
         },
         onSubmit: async (values) => {
-            const res = await axios.post("https://contact-app-backend-tau.vercel.app/users/login", values).then((res) => {
+            const res = await axios.post("https://contact-backend-dk27.onrender.com/users/login", values).then((res) => {
                 toast.success(res.data.message);
                 dispatch(setLogged(true));
                 dispatch(setLoggedUser(res.data.user));

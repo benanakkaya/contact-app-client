@@ -28,7 +28,7 @@ const CreateGroup = () => {
             title: ""
         },
         onSubmit: async (values) => {
-            const res = await axios.post(`https://contact-app-backend-tau.vercel.app/groups/${groupEditMode ? "edit" : "create"}`,
+            const res = await axios.post(`https://contact-backend-dk27.onrender.com/groups/${groupEditMode ? "edit" : "create"}`,
                 groupEditMode ?
                     { title: values.title, members, owner: loggedUser._id, id: groupEditValues._id } :
                     { title: values.title, members, owner: loggedUser._id }).
