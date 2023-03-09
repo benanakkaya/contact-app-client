@@ -17,7 +17,7 @@ const Register = () => {
             password: ""
         },
         onSubmit: async (values) => {
-            const res = await axios.post("http://localhost:5000/users/register", values).then((res) => {
+            const res = await axios.post("https://contact-app-backend-tau.vercel.app/users/register", values).then((res) => {
                 toast.success(res.data.message);
                 navigate("/");
             }).catch((err) => {

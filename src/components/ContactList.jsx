@@ -4,7 +4,7 @@ import ContactCard from './ContactCard';
 import { FaUsersSlash, FaUserPlus } from "react-icons/fa";
 import { setModalVisibility } from '../redux/Users/userSlice';
 
-const ContactList = ({searchInput, activeTab}) => {
+const ContactList = ({searchInput}) => {
 
     const dispatch = useDispatch();
     const { loggedUser } = useSelector((state) => state.user);

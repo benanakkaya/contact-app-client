@@ -50,7 +50,7 @@ const NewContact = () => {
             }
 
             if (editMode === false) {
-                const res = await axios.post("http://localhost:5000/contacts/newContact",
+                const res = await axios.post("https://contact-app-backend-tau.vercel.app/contacts/newContact",
                     {
                         name: values.name,
                         surname: values.surname,
@@ -67,7 +67,7 @@ const NewContact = () => {
                         toast.success(err.response.data.message);
                     })
             } else {
-                const res = await axios.post("http://localhost:5000/contacts/editContact",
+                const res = await axios.post("https://contact-app-backend-tau.vercel.app/contacts/editContact",
                     {
                         name: values.name,
                         surname: values.surname,
@@ -77,29 +77,11 @@ const NewContact = () => {
                         id: editValues._id,
                         image: newImageUrl
                     }).then((res) => {
-                        toast.success(res.data.message, {
-                            position: "top-right",
-                            autoClose: 2500,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
+                        toast.success(res.data.message);
                         dispatch(getLoggedUserData(loggedUser._id));
                         closeModal();
                     }).catch((err) => {
-                        toast.error(err.response.data.message, {
-                            position: "top-right",
-                            autoClose: 2500,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
+                        toast.error(err.response.data.message);
                     })
             }
 

@@ -6,7 +6,7 @@ export const userAdapter = createEntityAdapter();
 export const userSelector = userAdapter.getSelectors((user) => state.user);
 
 export const getLoggedUserData = createAsyncThunk("users/getUser", async (id) => {
-    const res = await axios.post("http://localhost:5000/users/getUser", { id });
+    const res = await axios.post("https://contact-app-backend-tau.vercel.app/users/getUser", { id });
     return res.data;
 })
 

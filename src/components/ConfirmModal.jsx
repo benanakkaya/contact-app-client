@@ -18,12 +18,12 @@ const ConfirmModal = () => {
 
     const handleDelete = async () => {
         if (confirmModalType === "contact") {
-            const res = await axios.post("http://localhost:5000/contacts/deleteContact", { id: editValues._id });
+            const res = await axios.post("https://contact-app-backend-tau.vercel.app/contacts/deleteContact", { id: editValues._id });
             dispatch(setEditValues({}));
             dispatch(getLoggedUserData(editValues.owner));
         }
         if (confirmModalType === "group") {
-            const res = await axios.post("http://localhost:5000/groups/delete", { id: groupEditValues._id });
+            const res = await axios.post("https://contact-app-backend-tau.vercel.app/groups/delete", { id: groupEditValues._id });
             dispatch(setGroupEditValues({}));
             dispatch(getLoggedUserData(groupEditValues.owner));
         }

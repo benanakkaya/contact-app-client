@@ -15,7 +15,7 @@ import {AiOutlineLoading3Quarters} from "react-icons/ai"
 const Homepage = () => {
 
     const dispatch = useDispatch();
-    const { logged, loggedUser, status } = useSelector((state) => state.user);
+    const { logged, status } = useSelector((state) => state.user);
     const [searchInput, setSearchInput] = useState("");
     const [activeTab, setActiveTab] = useState("contacts");
 
