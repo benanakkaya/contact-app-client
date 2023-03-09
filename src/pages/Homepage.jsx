@@ -51,24 +51,27 @@ const Homepage = () => {
             {logged === false &&
                 <Login />
             }
-            {logged === true && status === "succeeded" ?
-
-                <div className='flex flex-col gap-5'>
-                    <div className='flex items-end justify-between h-16 border-b-2 border-lightBlue'>
-                        <ul className='h-full flex items-end'>
-                            <li onClick={() => handleTab("contacts")} className={`p-2 cursor-pointer text-xs md:text-sm rounded-tl-md rounded-tr-2xl flex items-center ${activeTab === "contacts" ? "bg-body" : "bg-lightBlue"} `}>Contacts</li>
-                            <li onClick={() => handleTab("groups")} className={`p-2 cursor-pointer text-xs md:text-sm  rounded-tl-md rounded-tr-2xl flex items-center ${activeTab === "groups" ? "bg-body" : "bg-lightBlue"}`}>Groups</li>
-                        </ul>
-                        <input defaultValue={searchInput} onChange={(e) => setSearchInput(e.target.value)} type="text" className='px-2 py-1 w-32 md:w-auto text-xs md:text-sm mb-1 rounded-md text-primary' placeholder={`Search a ${activeTab === "contacts" ? "contact" : "group"}...`} />
-                    </div>
-                    {activeTab === "contacts" ? <ContactList searchInput={searchInput} activeTab={activeTab} /> : <GroupList searchInput={searchInput} activeTab={activeTab} />
+            {logged &&
+                <>
+                    {status === "succeeded" ?
+                        <div className='flex flex-col gap-5'>
+                            <div className='flex items-end justify-between h-16 border-b-2 border-lightBlue'>
+                                <ul className='h-full flex items-end'>
+                                    <li onClick={() => handleTab("contacts")} className={`p-2 cursor-pointer text-xs md:text-sm rounded-tl-md rounded-tr-2xl flex items-center ${activeTab === "contacts" ? "bg-body" : "bg-lightBlue"} `}>Contacts</li>
+                                    <li onClick={() => handleTab("groups")} className={`p-2 cursor-pointer text-xs md:text-sm  rounded-tl-md rounded-tr-2xl flex items-center ${activeTab === "groups" ? "bg-body" : "bg-lightBlue"}`}>Groups</li>
+                                </ul>
+                                <input defaultValue={searchInput} onChange={(e) => setSearchInput(e.target.value)} type="text" className='px-2 py-1 w-32 md:w-auto text-xs md:text-sm mb-1 rounded-md text-primary' placeholder={`Search a ${activeTab === "contacts" ? "contact" : "group"}...`} />
+                            </div>
+                            {activeTab === "contacts" ? <ContactList searchInput={searchInput} activeTab={activeTab} /> : <GroupList searchInput={searchInput} activeTab={activeTab} />
+                            }
+                        </div>
+                        :
+                        <div className='h-96 w-full flex items-center justify-center'>
+                            <AiOutlineLoading3Quarters className='animate-spin text-4xl' />
+                        </div>
                     }
-                </div>
-                : status === "pending" ?
-                    <div className='h-96 w-full flex items-center justify-center'>
-                        <AiOutlineLoading3Quarters className='animate-spin text-4xl' />
-                    </div>
-                    : null}
+                </>
+            }
         </div>
 
 

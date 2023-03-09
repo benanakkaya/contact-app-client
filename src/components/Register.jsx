@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
 
 const Register = () => {
 
     const navigate = useNavigate();
+
+    const [status, setStatus] = useState("idle")
 
     const formik = useFormik({
         initialValues: {
@@ -17,10 +20,13 @@ const Register = () => {
             password: ""
         },
         onSubmit: async (values) => {
+            setStatus("pending")
             const res = await axios.post("https://contact-backend-dk27.onrender.com/users/register", values).then((res) => {
                 toast.success(res.data.message);
+                setStatus("succeeded")
                 navigate("/");
             }).catch((err) => {
+                setStatus("error")
                 toast.error(err.response.data.message);
             })
 
@@ -47,7 +53,10 @@ const Register = () => {
                     {formik.errors.email && formik.touched.email && <small className='text-customRed text-xs px-2'>{formik.errors.email}</small>}
                     <input onChange={formik.handleChange} onBlur={formik.handleBlur} className='text-background py-1 px-2 text-lg rounded-lg' type='password' placeholder='Password' name='password' />
                     {formik.errors.password && formik.touched.password && <small className='text-customRed text-xs px-2'>{formik.errors.password}</small>}
-                    <button type="submit" className='bg-body rounded-lg text-white text-lg'>Register</button>
+                    <button disabled={status === "pending" ? true : false} type='submit' className='bg-body rounded-lg text-white text-lg flex items-center justify-center gap-4'>
+                        {status === "pending" && <AiOutlineLoading3Quarters className='animate-spin' />}
+                        {status === "pending" ? "Registering..." : "Register"}
+                    </button>
                     <small className='w-full text-center'>Are you already a member? <Link to="/" className="text-body">Log in!</Link></small>
                 </form>
             </div>

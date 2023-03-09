@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getLoggedUserData, setEditMode, setEditValues, setModalVisibility } from '../redux/Users/userSlice';
 import * as yup from "yup";
 import { FaUserPlus } from "react-icons/fa"
-import { AiFillFileImage } from "react-icons/ai"
+import { AiFillFileImage, AiOutlineLoading3Quarters } from "react-icons/ai"
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ImagePreview from './ImagePreview';
@@ -13,11 +13,11 @@ const NewContact = () => {
 
     const dispatch = useDispatch();
 
-    
+
     const fileRef = useRef(null);
 
     const { modalVisibility, loggedUser, editValues, editMode } = useSelector((state) => state.user);
-
+    const [status, setStatus] = useState("idle");
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -35,7 +35,7 @@ const NewContact = () => {
             const { image } = values;
             const formData = new FormData();
             var newImageUrl = values.image;
-
+            setStatus("pending")
 
             if (typeof values.image !== "string") {
                 try {
@@ -46,6 +46,7 @@ const NewContact = () => {
                     })
                 } catch (error) {
                     toast.error("Please try to create a contact without a photo!");
+                    setStatus("error")
                 }
             }
 
@@ -60,10 +61,12 @@ const NewContact = () => {
                         owner: loggedUser._id,
                         image: newImageUrl
                     }).then((res) => {
+                        setStatus("succeeded")
                         toast.success(res.data.message);
                         dispatch(getLoggedUserData(loggedUser._id));
                         closeModal();
                     }).catch((err) => {
+                        setStatus("error")
                         toast.success(err.response.data.message);
                     })
             } else {
@@ -77,10 +80,12 @@ const NewContact = () => {
                         id: editValues._id,
                         image: newImageUrl
                     }).then((res) => {
+                        setStatus("succeeded")
                         toast.success(res.data.message);
                         dispatch(getLoggedUserData(loggedUser._id));
                         closeModal();
                     }).catch((err) => {
+                        setStatus("error")
                         toast.error(err.response.data.message);
                     })
             }
@@ -156,7 +161,10 @@ const NewContact = () => {
                                 </div>
 
 
-                                <button type='submit' className='bg-body rounded-lg text-white text-lg'>{editMode ? "Edit" : "Create"}</button>
+                                <button disabled={status === "pending" ? true : false} type='submit' className={`${status === "pending" ? 'bg-orange-400' : 'bg-body'} rounded-lg text-white text-lg flex items-center justify-center gap-4`}>
+                                    {status === "pending" && <AiOutlineLoading3Quarters className='animate-spin' />}
+                                    {status === "pending" ? "Please wait..." : editMode === true ? "Edit" : "Create" }
+                                </button>
 
                             </form>
                         </div>

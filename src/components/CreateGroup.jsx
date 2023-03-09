@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLoggedUserData, setGroupEditMode, setGroupEditValues, setGroupModalVisibility } from '../redux/Users/userSlice';
 import { MdGroupAdd } from "react-icons/md"
-import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai"
+import { AiFillPlusCircle, AiFillMinusCircle, AiOutlineLoading3Quarters } from "react-icons/ai"
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import axios from 'axios';
@@ -12,6 +12,8 @@ const CreateGroup = () => {
 
     const { groupModalVisibility, loggedUser, groupEditValues, groupEditMode } = useSelector((state) => state.user);
     const dispatch = useDispatch();
+
+    const [status, setStatus] = useState("idle");
 
     const [members, setMembers] = useState([]);
 
@@ -28,16 +30,19 @@ const CreateGroup = () => {
             title: ""
         },
         onSubmit: async (values) => {
+            setStatus("pending");
             const res = await axios.post(`https://contact-backend-dk27.onrender.com/groups/${groupEditMode ? "edit" : "create"}`,
                 groupEditMode ?
                     { title: values.title, members, owner: loggedUser._id, id: groupEditValues._id } :
                     { title: values.title, members, owner: loggedUser._id }).
                 then((res) => {
+                    setStatus("succeeded");
                     toast.success(res.data.message);
                     dispatch(getLoggedUserData(loggedUser._id));
                     closeModal();
                 }).
                 catch((err) => {
+                    setStatus("error");
                     toast.error(err.response.data.message);
                 })
         },
@@ -112,7 +117,10 @@ const CreateGroup = () => {
                                         </ul>
                                     </div>
                                 </div>
-                                <button type="submit" className=' w-full bg-body py-1 rounded-md '>{groupEditMode ? "Edit" : "Create"}</button>
+                                <button disabled={status === "pending" ? true : false} type='submit' className={`${status === "pending" ? 'bg-orange-400' : 'bg-body'} rounded-lg text-white text-lg flex items-center justify-center gap-4`}>
+                                    {status === "pending" && <AiOutlineLoading3Quarters className='animate-spin' />}
+                                    {status === "pending" ? "Please wait..." : groupEditMode === true ? "Edit" : "Create" }
+                                </button>
                             </form>
                         </div>
                     </div>
