@@ -27,6 +27,7 @@ const Login = () => {
                 toast.success(res.data.message);
                 dispatch(setLogged(true));
                 dispatch(setLoggedUser(res.data.user));
+                dispatch(setStatus("succeeded"))
                 localStorage.setItem("token", JSON.stringify(res.data.token));
             }).catch((err) => {
                 setStatus("error")
