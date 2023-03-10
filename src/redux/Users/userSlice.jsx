@@ -66,15 +66,18 @@ const userSlice = createSlice({
         setMemberListValues: (state, action) => {
             state.memberListValues = action.payload;
         },
+        setDataStatus: (state, action) => {
+            state.status = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(getLoggedUserData.pending, (state, action) => {
             state.status = "pending";
         }),
-        builder.addCase(getLoggedUserData.fulfilled, (state, action) => {
-            state.status = "succeeded";
-            state.loggedUser = action.payload;
-        })
+            builder.addCase(getLoggedUserData.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.loggedUser = action.payload;
+            })
     }
 });
 
@@ -94,4 +97,5 @@ export const {
     setGroupEditMode,
     setGroupEditValues,
     setMemberListModal,
-    setMemberListValues } = userSlice.actions;
+    setMemberListValues,
+    setDataStatus } = userSlice.actions;

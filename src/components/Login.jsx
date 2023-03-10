@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as yup from "yup"
-import { setLogged, setLoggedUser } from '../redux/Users/userSlice';
+import { setLogged, setLoggedUser, setDataStatus } from '../redux/Users/userSlice';
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 
 
@@ -27,7 +27,7 @@ const Login = () => {
                 toast.success(res.data.message);
                 dispatch(setLogged(true));
                 dispatch(setLoggedUser(res.data.user));
-                dispatch(setStatus("succeeded"))
+                dispatch(setDataStatus("succeeded"))
                 localStorage.setItem("token", JSON.stringify(res.data.token));
             }).catch((err) => {
                 setStatus("error")
